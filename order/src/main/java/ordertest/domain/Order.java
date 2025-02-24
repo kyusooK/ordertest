@@ -32,7 +32,9 @@ public class Order {
 
     //<<< Clean Arch / Port Method
     public void updateOrder(UpdateOrderCommand updateOrderCommand) {
-        //implement business logic here:
+        repository().findById(this.getId()).ifPresent(order -> {
+            this.setAddress(updateOrderCommand.getAddress());
+        });
 
         OrderUpdated orderUpdated = new OrderUpdated(this);
         orderUpdated.publishAfterCommit();
